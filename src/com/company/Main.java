@@ -1,6 +1,8 @@
 package com.company;
 
 
+import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -107,11 +109,40 @@ import java.util.Scanner;
                 e.printStackTrace();
             }
         }
+        public static void DeleteBook(){
+            Scanner input = new Scanner(System.in);
+            System.out.println("Enter the ISBN number of the book you want to remove");
+            String ISBNUnwanted = input.next();
+            try {
+                Scanner myReader = new Scanner(bookInfo);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    if (data.contains(ISBNUnwanted)) {
+
+                    } else {
+                        ArrayList<String> tempArray = new ArrayList<>();
+                        tempArray.add(data);
+                        FileWriter myWriter = new FileWriter(bookInfo.getName(), false);
+                        int tempLength = tempArray.size();
+                        for (int i = 0; i < tempLength; i++) {
+                            myWriter.write(tempArray.get(i) +"\n");
+                        }
+
+                    }
+                }
+
+            } catch(Exception e){
+                        System.out.println("An error occurred "+e);
+                    }
+            myWriter.close();
+            myReader.close();
+                }
         public static void MainMenu() {
             System.out.println("Do you want to write to the file or delete the file: 1 or 2 or 3");
             System.out.println("1. Write");
             System.out.println("2. Read File");
             System.out.println("3. Delete File");
+            System.out.println("4. Delete a Book");
             Scanner input = new Scanner(System.in);
             try{
                 int choice = input.nextInt();
@@ -124,6 +155,8 @@ import java.util.Scanner;
                 }else if (choice == 2){
                     CreateFile();
                     ReadFile();
+                }else if(choice == 4){
+                    DeleteBook();
                 }
                 else{
                     System.out.println("This is not an option try again");
