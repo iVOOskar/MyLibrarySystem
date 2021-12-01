@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
     //you can use a 2d array list with: ArrayList<ArrayList<String>> = new ArrayList<>();
@@ -19,30 +18,18 @@ import java.util.Scanner;
         private static ArrayList <String> genres = new ArrayList<>();
 
         public static void main(String[] args) {
-            System.out.println("do you want to write to the file or delete the file: 1 or 2");
-            System.out.println("1. Write");
-            System.out.println("2. Read File");
-            System.out.println("3. Delete File");
             Scanner input = new Scanner(System.in);
-            try{
-                int choice = input.nextInt();
-                if (choice == 1){
-                    CreateFile();
-                    enterBooks();
-                    WriteToFile();
-                }else if (choice == 3){
-                    CreateFile();
-                    DeleteFile();
-                }else if (choice == 2){
-                    ReadFile();
-                }
-                else{
-                    System.out.println("This is not an option try again");
-                }
-            }catch (Exception e){
-                System.out.println("error occurred "+e);
-            }
+            boolean i = true;
+            while (i) {
+                MainMenu();
+                System.out.println("do you want to return to the main menu:y/n");
+                String menuChoice = input.next();
+                if (menuChoice.equals("y")){
 
+                }else{
+                    break;
+                }
+            }
         }
         public static void CreateFile() {
             try {
@@ -71,7 +58,7 @@ import java.util.Scanner;
                     authors.add(author);
                     String genre = input.next();
                     genres.add(genre);
-                    System.out.println("do you want to add another book: y/n");
+                    System.out.println("Do you want to add another book: y/n");
                     String anotherBook = input.next();
                     if(anotherBook.equals("y")){
 
@@ -118,6 +105,31 @@ import java.util.Scanner;
             } catch (FileNotFoundException e) {
                 System.out.println("An error occurred.");
                 e.printStackTrace();
+            }
+        }
+        public static void MainMenu() {
+            System.out.println("Do you want to write to the file or delete the file: 1 or 2 or 3");
+            System.out.println("1. Write");
+            System.out.println("2. Read File");
+            System.out.println("3. Delete File");
+            Scanner input = new Scanner(System.in);
+            try{
+                int choice = input.nextInt();
+                if (choice == 1){
+                    CreateFile();
+                    enterBooks();
+                    WriteToFile();
+                }else if (choice == 3){
+                    DeleteFile();
+                }else if (choice == 2){
+                    CreateFile();
+                    ReadFile();
+                }
+                else{
+                    System.out.println("This is not an option try again");
+                }
+            }catch (Exception e){
+                System.out.println("error occurred "+e);
             }
         }
     }
