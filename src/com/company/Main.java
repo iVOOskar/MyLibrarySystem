@@ -123,7 +123,7 @@ import java.util.Scanner;
                     }
                 }
                 if (capitalFlag && numberFlag && spaceFlag && atFlag){
-                    myWriter.write(userName+"/"+password+"\n");
+                    myWriter.write(userName+"/"+password.hashCode()+"\n");
                     myWriter.close();
                     System.out.println("Successfully wrote to the file.");
                 }else{
@@ -179,11 +179,14 @@ import java.util.Scanner;
                 String userName = input.next();
                 System.out.print("Password:");
                 String password = input.next();
-                String userPlusPass = userName+"/"+password;
+                String hashPass = Integer.toString(password.hashCode());
+                String userPlusPass = userName+"/"+hashPass;
                 Scanner myReader = new Scanner(userInfo);
+                boolean correctPass = false;
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
                     if (data.equals(userPlusPass)){
+                        correctPass = true;
                         boolean i = true;
                         while (i) {
                             MainMenu();
@@ -195,9 +198,11 @@ import java.util.Scanner;
                                 break;
                             }
                         }
-                    }else{
-                        System.out.println("Incorrect username or password");
                     }
+                }
+                if (correctPass){
+                }else{
+                    System.out.println("Incorrect username or password");
                 }
                 myReader.close();
             }catch(Exception e){
