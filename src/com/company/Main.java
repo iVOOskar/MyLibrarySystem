@@ -24,7 +24,7 @@ import java.util.Scanner;
         public static void main(String[] args) {
             Scanner input = new Scanner(System.in);
             CreateUserFile();
-            System.out.println("Do you want to write to the file or delete the file: 1 or 2 or 3");
+            System.out.println("Do you want to login in or make a new user");
             System.out.println("1.login");
             System.out.println("2.Make new user");
             try{
@@ -39,11 +39,6 @@ import java.util.Scanner;
             }catch (Exception e){
                 System.out.println("error occurred "+e);
             }
-
-
-
-
-
         }
         public static void CreateBookFile() {
             try {
