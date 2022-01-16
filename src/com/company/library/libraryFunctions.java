@@ -3,16 +3,14 @@ package com.company.library;
 
 import com.company.objects.books;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class libraryFunctions {
     private static File bookInfo = new File("libraryBooks.txt");
     private static File userInfo = new File("userLogins.txt");
+
     private static ArrayList<String> bookNames = new ArrayList<>();
     private static ArrayList <String> isbnNumbers = new ArrayList<>();
     private static ArrayList <String> authors = new ArrayList<>();
@@ -120,9 +118,9 @@ public class libraryFunctions {
             int arrayLength = bookNames.size();
             for (int i = 0; i < arrayLength; i++) {
                 //writes each book to the file
-                myWriter.write(bookNames.get(i)+", ");
-                myWriter.write(isbnNumbers.get(i)+", ");
-                myWriter.write(authors.get(i)+", ");
+                myWriter.write(bookNames.get(i)+",");
+                myWriter.write(isbnNumbers.get(i)+",");
+                myWriter.write(authors.get(i)+",");
                 myWriter.write(genres.get(i)+"\n");
             }
             myWriter.close();
@@ -191,30 +189,38 @@ public class libraryFunctions {
         }
     }
     public static void DeleteBook(){
+        File tempFile = new File("MyTempFile.txt");
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the ISBN number of the book you want to remove");
-        String ISBNUnwanted = input.next();
         try {
             Scanner myReader = new Scanner(bookInfo);
-            FileWriter myWriter = new FileWriter(bookInfo.getName(), false);
+            FileWriter myWriter = new FileWriter(tempFile.getName(), false);
+            System.out.println("Enter the the info of the book you want to remove in this format:");
+            System.out.println("Name,ISBN Number,Author,Genre");
+            String lineToRemove = input.next();
+
             while (myReader.hasNextLine()) {
+
                 String data = myReader.nextLine();
-                if (data.contains(ISBNUnwanted)) {
-
-                } else {
-                    ArrayList<String> tempArray = new ArrayList<>();
-                    tempArray.add(data);
-
-                    int tempLength = tempArray.size();
-                    for (int i = 0; i < tempLength; i++) {
-                        myWriter.write(tempArray.get(i) +"\n");
-                    }
-                }
+                if (data.equals(lineToRemove)) continue;
+                myWriter.write(data +'\n' );
             }
             myWriter.close();
             myReader.close();
-        } catch(Exception e){
-            System.out.println("An error occurred "+e);
+
+            bookInfo.delete();
+
+            CreateBookFile();
+            FileWriter myWriterBooks = new FileWriter(bookInfo.getName(), false);
+            Scanner myReaderTempFile = new Scanner(tempFile);
+            while (myReaderTempFile.hasNextLine()) {
+
+                String data = myReaderTempFile.nextLine();
+                myWriterBooks.write(data +'\n' );
+            }
+            tempFile.delete();
+
+        }catch(Exception e){
+        System.out.println("an error occurred "+e);
         }
     }
 
