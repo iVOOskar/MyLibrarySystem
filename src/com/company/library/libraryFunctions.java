@@ -207,9 +207,6 @@ public class libraryFunctions {
             myWriter.close();
             myReader.close();
 
-            bookInfo.delete();
-
-            CreateBookFile();
             FileWriter myWriterBooks = new FileWriter(bookInfo.getName(), false);
             Scanner myReaderTempFile = new Scanner(tempFile);
             while (myReaderTempFile.hasNextLine()) {
